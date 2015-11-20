@@ -1,5 +1,5 @@
 {
-  "name": "to-do-list",
+  "name": "to-docom",
   "version": "0.0.0",
   "main": "server/app.js",
   "dependencies": {
@@ -15,8 +15,16 @@
     "lodash": "~2.4.1",
     "ejs": "~0.8.4",
     "mongoose": "~4.0.3",
+    "jsonwebtoken": "^5.0.0",
+    "express-jwt": "^3.0.0",
+    "passport": "~0.2.0",
+    "passport-local": "~0.1.6",
+    "passport-google-oauth": "latest",
     "composable-middleware": "^0.3.0",
-    "connect-mongo": "^0.8.1"
+    "connect-mongo": "^0.8.1",
+    "socket.io": "^1.0.6",
+    "socket.io-client": "^1.0.6",
+    "socketio-jwt": "^3.0.0"
   },
   "devDependencies": {
     "grunt": "~0.4.4",
@@ -32,8 +40,6 @@
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-uglify": "~0.4.0",
     "grunt-contrib-watch": "~0.6.1",
-    "karma-babel-preprocessor": "^5.2.1",
-    "grunt-babel": "~5.0.0",
     "grunt-google-cdn": "~0.4.0",
     "grunt-newer": "~0.7.0",
     "grunt-ng-annotate": "^0.2.3",

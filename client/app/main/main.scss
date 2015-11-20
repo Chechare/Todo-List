@@ -29,6 +29,88 @@
     border-top: 1px solid #E5E5E5;
 }
 
+
 .navbar-text {
   margin-left: 15px;
+}
+
+//-------------------------- My Styles ----------------------------------------
+
+.banner{
+  position: relative;
+  padding: 10px 15px;
+  color: #F5F5F5;
+  text-align: left;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  background: rgb(142, 36, 170);
+
+  h1{
+      margin: 0px;
+  }
+
+  img{
+    align-content: center;
+    margin: 0px;
+    height: 36px;
+    width: 36px;
+  }
+}
+
+.navbar-default .navbar-text{
+  color: #F5F5F5;
+}
+
+.navbar{
+  position: relative;
+  color: #F5F5F5;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  background: rgb(142, 36, 170);
+
+  .navbar-brand{
+    color: #F5F5F5;
+  }
+
+  .navbar-right li a{
+    color: #F5F5F5;
+  }
+
+  .navbar-nav li a{
+      color: #F5F5F5;
+  }
+
+  img{
+    margin: 7px 10px;
+    height: 36px;
+    width: 36px;
+  }
+}
+
+.nav-pills{
+  li{
+    a{
+      color: rgb(142, 36, 170);
+    }
+  }
+  li.active{
+    a{
+      background-color: rgb(142, 36, 170);
+    }
+    a:hover, a:focus{
+      background-color: rgb(186, 42, 222);
+    }
+  }
+}
+
+.nav-tabs{
+  li{
+    a{
+      color: rgb(142, 36, 170);
+    }
+  }
+}
+
+.categories{
+  h3{
+    color: rgb(142, 36, 170);
+  }
 }

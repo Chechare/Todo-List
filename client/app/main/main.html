@@ -1,21 +1,49 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<div  ng-include="'components/navbar/navbar.html'"></div>
 
-<header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
-  </div>
-</header>
-
+<!---Left Panel --->
 <div class="container">
   <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}</a></li>
+    <div class="col-md-2">
+      <ul class="nav nav-pills nav-stacked">
+        <li role="presentation" class="active"><a href="#">Todo</a></li>
+        <li role="presentation"><a href="#">Hoy</a></li>
+        <li role="presentation"><a href="#">Semana</a></li>
       </ul>
+      <!---Categories-->
+      <!-- Implementar Angular here -->
+      <div class="categories">
+        <h3>Categorías</h3>
+        <a href="#" class="list-group-item">
+          <span class="badge">0</span> Personal
+        </a>
+        <a href="#" class="list-group-item">
+          <span class="badge">0</span>Compras
+        </a>
+        <a href="#" class="list-group-item">
+          <span class="badge">0</span>Trabajo
+        </a>
+      </div>
     </div>
+    <!--- Right Panel -->
+    <div class="col-md-10">
+      <ul class="nav nav-tabs nav-justified">
+        <li role="presentation" class="active"><a href="#">Todos</a></li>
+        <li role="presentation" ><a href="#">Pendiente</a></li>
+        <li role="presentation" ><a href="#">Completados</a></li>
+      </ul>
+      <!--Check This for list implemetation -->
+
+        <form class="thing-form">
+          <label>Syncs in realtime across clients</label>
+          <p class="input-group">
+            <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
+            </span>
+          </p>
+        </form>
+      </div>
+    </div >
   </div>
 </div>
 

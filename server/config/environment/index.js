@@ -29,7 +29,7 @@ var all = {
 
   // Secret for session, you will want to change this and make it an environment variable
   secrets: {
-    session: 'to-do-list-secret'
+    session: 'to-docom-secret'
   },
 
   // List of user roles
@@ -44,6 +44,11 @@ var all = {
     }
   },
 
+  google: {
+    clientID:     process.env.GOOGLE_ID || 'id',
+    clientSecret: process.env.GOOGLE_SECRET || 'secret',
+    callbackURL:  (process.env.DOMAIN || '') + '/auth/google/callback'
+  }
 };
 
 // Export the config object based on the NODE_ENV

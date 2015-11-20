@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('toDoListApp')
+angular.module('toDocomApp')
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
