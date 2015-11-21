@@ -8,3 +8,5 @@ angular.module('toDocomApp')
         controller: 'MainCtrl'
       });
   });
+
+  //Mis funciones

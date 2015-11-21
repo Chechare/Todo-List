@@ -9,11 +9,12 @@
         <li role="presentation"><a href="#">Hoy</a></li>
         <li role="presentation"><a href="#">Semana</a></li>
       </ul>
+
       <!---Categories-->
       <!-- Implementar Angular here -->
       <div class="categories">
         <h3>Categorías</h3>
-        <a href="#" class="list-group-item">
+        <a href="#" class="list-group-item active" >
           <span class="badge">0</span> Personal
         </a>
         <a href="#" class="list-group-item">
@@ -26,22 +27,44 @@
     </div>
     <!--- Right Panel -->
     <div class="col-md-10">
-      <ul class="nav nav-tabs nav-justified">
+      <h1> Personal </h1>
+
+      <ul class="nav nav-pills ">
         <li role="presentation" class="active"><a href="#">Todos</a></li>
         <li role="presentation" ><a href="#">Pendiente</a></li>
         <li role="presentation" ><a href="#">Completados</a></li>
       </ul>
-      <!--Check This for list implemetation -->
 
-        <form class="thing-form">
-          <label>Syncs in realtime across clients</label>
-          <p class="input-group">
-            <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
-            <span class="input-group-btn">
-              <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
-            </span>
-          </p>
-        </form>
+        <!--  Container de Tarea -->
+        <div  class="tasks">
+
+          <div ng-repeat= "task in awesomeThings">
+            <li class="task">
+              <a class="checker" ng-click="check(task)" href=""><i id="{{task._id}}" class="fa fa-square-o"></i></a>
+              <span>{{task.name}}</span>
+              <span>{{task}}</span>
+              <a href="" ng-click="deleteThing(task)"><i class="fa fa-times"></i></a>
+            </li>
+          </div>
+        </div>
+
+        <!-- Form para crear tarea -->
+        <div class="task-form" >
+          <form class="task-form" ng-hide="hideForm" >
+            <p>
+              <input id="inputTask" class="form-control" type="text"  placeholder="Nombre de la tarea" ng-model="newThing">
+            </p>
+            <div>
+              <button type="submit" class="btn btn-primary" ng-click="addThing()">Agregar</button>
+              <button ng-click="openForm()" class="btn btn-default ">Cerrar</button>
+              <a><i class="fa fa-tag"></i></a>
+              <a><i class="fa fa-calendar-plus-o"></i></a>
+              <a><i class="fa fa-sticky-note-o"></i></a>
+            </div>
+          </form>
+          <a href ng-click="openForm()"><b>+</b> Agregar tarea</a>
+        </div>
+
       </div>
     </div >
   </div>
@@ -49,8 +72,8 @@
 
 <footer class="footer">
   <div class="container">
-      <p>Angular Fullstack v2.1.1 |
-        <a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
+      <p>César Robles |
+        <a href="#">@ChechareTRs</a> |
          <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
   </div>
 </footer>

@@ -8,6 +8,7 @@ angular.module('toDocomApp', [
   'btford.socket-io',
   'ui.bootstrap'
 ])
+//Routes
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .otherwise({

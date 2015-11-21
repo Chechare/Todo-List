@@ -1,3 +1,5 @@
+//Importando iconos de Awesome Font
+
 .thing-form {
     margin: 20px 0;
 }
@@ -36,13 +38,28 @@
 
 //-------------------------- My Styles ----------------------------------------
 
+$primary-purple: rgb(142, 36, 170);
+$focus-purple:  rgb(186, 42, 222);
+$primary-font-color: #F5F5F5;
+$hover-list: #EEE;
+
+.btn-primary{
+  background-color: $primary-purple;
+  border-color: #8E49AA;
+
+}
+
+.btn-primary:hover, .btn-primary:focus{
+  background-color: $focus-purple;
+}
+
 .banner{
   position: relative;
   padding: 10px 15px;
-  color: #F5F5F5;
+  color:$primary-font-color;
   text-align: left;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-  background: rgb(142, 36, 170);
+  background: $primary-purple;
 
   h1{
       margin: 0px;
@@ -57,25 +74,25 @@
 }
 
 .navbar-default .navbar-text{
-  color: #F5F5F5;
+  color: $primary-font-color;
 }
 
 .navbar{
   position: relative;
-  color: #F5F5F5;
+  color: $primary-font-color;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-  background: rgb(142, 36, 170);
+  background: $primary-purple;
 
   .navbar-brand{
-    color: #F5F5F5;
+    color: $primary-font-color;
   }
 
   .navbar-right li a{
-    color: #F5F5F5;
+    color: $primary-font-color;
   }
 
   .navbar-nav li a{
-      color: #F5F5F5;
+      color: $primary-font-color;
   }
 
   img{
@@ -88,15 +105,15 @@
 .nav-pills{
   li{
     a{
-      color: rgb(142, 36, 170);
+      color: $primary-purple;
     }
   }
   li.active{
     a{
-      background-color: rgb(142, 36, 170);
+      background-color: $primary-purple;
     }
     a:hover, a:focus{
-      background-color: rgb(186, 42, 222);
+      background-color:$focus-purple;
     }
   }
 }
@@ -104,13 +121,95 @@
 .nav-tabs{
   li{
     a{
-      color: rgb(142, 36, 170);
+      color: $primary-purple;
     }
   }
 }
 
 .categories{
   h3{
-    color: rgb(142, 36, 170);
+    color: $primary-purple;
   }
+  .list-group-item{
+    border: none;
+    border-radius: 4px
+  }
+
+  .list-group-item:hover{
+    background-color: $hover-list;
+  }
+
+  .list-group-item.active:hover, .list-group-item.active:focus{
+    background-color:$focus-purple;
+  }
+
+  .active{
+    background-color: $primary-purple;
+
+    span.badge{
+      color: $primary-purple;
+    }
+  }
+
+  button{
+    align-self: right;
+  }
+}
+
+.task-form{
+  margin: 20px 0px;
+  width: 80%;
+  a{
+    color: $primary-purple;
+  }
+
+  button.btn{
+    padding: 3px 6px;
+
+  }
+
+  .fa{
+    float: right;
+    margin-right: 10px;
+    font-size: 1.5em;
+  }
+}
+
+.tasks{
+  margin-top: 20px;
+  div{
+    a{
+      color: #999;
+      position: relative;
+      float: right;
+      vertical-align: middle;
+    }
+
+    .checker{
+      color: #999;
+      vertical-align: middle;
+      position: relative;
+      margin-top: -3px;
+      float: left;
+      margin-right: 20px;
+      font-size: 1.5em;
+    }
+  }
+}
+
+.task{
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  background-color: #FFF;
+  word-break: break-all;
+  border-bottom: 1px solid #DDD;
+  span{
+    padding-right: 70px;
+  }
+}
+
+.task:last-child {
+  margin-bottom: 0px;
 }

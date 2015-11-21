@@ -13,7 +13,10 @@ angular.module('toDocomApp')
       if($scope.newThing === '') {
         return;
       }
-      $http.post('/api/things', { name: $scope.newThing });
+      $http.post('/api/things', {
+        name: $scope.newThing,
+        testvariable: $scope.newThing
+      });
       $scope.newThing = '';
     };
 
@@ -24,4 +27,31 @@ angular.module('toDocomApp')
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
     });
+
+    //Mis funciones y variables
+    $scope.hideForm = true;
+    $scope.checkedTask = false;
+    $scope.openForm = function(){
+      document.getElementById("inputTask").value="";
+      if($scope.hideForm){
+        $scope.hideForm = false;
+      }else{
+          $scope.hideForm = true;
+      }
+    };
+
+    $scope.check =  function(task){
+      //alert(task._id);
+      if(task.completed){
+        task.completed = false;
+        document.getElementById(task._id).className = "fa fa-square-o";
+      }else{
+        document.getElementById(task._id).className = "fa fa-check-square";
+        task.completed = true;
+      }
+    };
+
+
+
+
   });
