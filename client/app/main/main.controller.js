@@ -13,11 +13,13 @@ angular.module('toDocomApp')
       if($scope.newThing === '') {
         return;
       }
+
       $http.post('/api/things', {
-        name: $scope.newThing,
-        testvariable: $scope.newThing
+        name: $scope.newThing
       });
+
       $scope.newThing = '';
+
     };
 
     $scope.deleteThing = function(thing) {
@@ -30,7 +32,7 @@ angular.module('toDocomApp')
 
     //Mis funciones y variables
     $scope.hideForm = true;
-    $scope.checkedTask = false;
+
     $scope.openForm = function(){
       document.getElementById("inputTask").value="";
       if($scope.hideForm){
@@ -41,7 +43,6 @@ angular.module('toDocomApp')
     };
 
     $scope.check =  function(task){
-      //alert(task._id);
       if(task.completed){
         task.completed = false;
         document.getElementById(task._id).className = "fa fa-square-o";
@@ -49,9 +50,6 @@ angular.module('toDocomApp')
         document.getElementById(task._id).className = "fa fa-check-square";
         task.completed = true;
       }
+      $http.put('/api/things/' + task._id, task);
     };
-
-
-
-
   });
