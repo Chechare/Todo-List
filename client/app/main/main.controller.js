@@ -3,10 +3,16 @@
 angular.module('toDocomApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
     $scope.awesomeThings = [];
+    $scope.categories = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
       socket.syncUpdates('thing', $scope.awesomeThings);
+    });
+
+    $http.get('/api/category').success(function(categories) {
+      $scope.categories = categories;
+      socket.syncUpdates('category', $scope.categories);
     });
 
     $scope.addThing = function() {
@@ -14,6 +20,14 @@ angular.module('toDocomApp')
         return;
       }
       $http.post('/api/things', $scope.newThing);
+
+      if($scope.newThing.tag != ''){
+        $http.post('/api/category', {
+          name: $scope.newThing.tag,
+          tasks: [{_id: $scope.newThing._id}]
+        });
+      }
+
       $scope.newThing = null;
     };
 
@@ -23,6 +37,10 @@ angular.module('toDocomApp')
 
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
+    });
+
+    $scope.$on('$destroy', function () {
+      socket.unsyncUpdates('category');
     });
 
     //Mis funciones y variables

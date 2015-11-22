@@ -1,3 +1,4 @@
+<script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <div  ng-include="'components/navbar/navbar.html'"></div>
 
 <!---Left Panel --->
@@ -14,17 +15,14 @@
       <!-- Implementar Angular here -->
       <div class="categories">
         <h3>Categorías</h3>
-        <a href="#" class="list-group-item active" >
-          <span class="badge">0</span> Personal
-        </a>
-        <a href="#" class="list-group-item">
-          <span class="badge">0</span>Compras
-        </a>
-        <a href="#" class="list-group-item">
-          <span class="badge">0</span>Trabajo
-        </a>
+        <div  ng-repeat="tag in categories">
+          <a href="#" class="list-group-item" >
+            <span class="badge">{{tag.count}}</span> {{tag.name}}
+          </a>
+        </div>
       </div>
     </div>
+
     <!--- Right Panel -->
     <div class="col-md-10">
       <h1> Personal </h1>

@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/todocom-dev'
   },
 
-  seedDB: false
+  seedDB: true
 };
