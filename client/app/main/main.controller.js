@@ -10,16 +10,11 @@ angular.module('toDocomApp')
     });
 
     $scope.addThing = function() {
-      if($scope.newThing === '') {
+      if($scope.newThing.name === '') {
         return;
       }
-
-      $http.post('/api/things', {
-        name: $scope.newThing
-      });
-
-      $scope.newThing = '';
-
+      $http.post('/api/things', $scope.newThing);
+      $scope.newThing = null;
     };
 
     $scope.deleteThing = function(thing) {
@@ -33,23 +28,17 @@ angular.module('toDocomApp')
     //Mis funciones y variables
     $scope.hideForm = true;
 
-    $scope.openForm = function(){
-      document.getElementById("inputTask").value="";
-      if($scope.hideForm){
-        $scope.hideForm = false;
-      }else{
-          $scope.hideForm = true;
-      }
-    };
-
     $scope.check =  function(task){
-      if(task.completed){
-        task.completed = false;
-        document.getElementById(task._id).className = "fa fa-square-o";
-      }else{
-        document.getElementById(task._id).className = "fa fa-check-square";
-        task.completed = true;
-      }
+      task.completed = !task.completed;
       $http.put('/api/things/' + task._id, task);
     };
+
+    $scope.changeChevron = function(id){
+      if(document.getElementById(id).className=="fa fa-chevron-down" ){
+        document.getElementById(id).className="fa fa-chevron-up";
+      }else{
+        document.getElementById(id).className="fa fa-chevron-down";
+      }
+    }
+
   });

@@ -173,6 +173,12 @@ $hover-list: #EEE;
     margin-right: 10px;
     font-size: 1.5em;
   }
+
+  #taskDescription{
+    input{
+      height: 80px;
+    }
+  }
 }
 
 .tasks{
@@ -183,6 +189,7 @@ $hover-list: #EEE;
       position: relative;
       float: right;
       vertical-align: middle;
+      margin-left: 20px;
     }
 
     .checker{
@@ -212,4 +219,17 @@ $hover-list: #EEE;
 
 .task:last-child {
   margin-bottom: 0px;
+}
+
+.task-completed{
+    text-decoration: line-through;
+    color: #777;
+}
+
+.container{
+  width: 75%;
+}
+
+.task-desc-container{
+  padding: 10px 56px;
 }

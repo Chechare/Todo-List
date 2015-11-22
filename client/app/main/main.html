@@ -37,32 +37,38 @@
 
         <!--  Container de Tarea -->
         <div  class="tasks">
-
           <div ng-repeat= "task in awesomeThings">
             <li class="task">
-              <a class="checker" ng-click="check(task)" href=""><i id="{{task._id}}" class="fa fa-square-o"></i></a>
-              <span>{{task.name}}</span>
-              <span>{{task}}</span>
+              <a class="checker" ng-click="check(task)" href=""><i id="{{task._id}}" ng-class="{'fa fa-check-square': task.completed, 'fa fa-square-o':!task.completed}"></i></a>
+              <span ng-class= "{'task-completed': task.completed}">{{task.name}}</span>
               <a href="" ng-click="deleteThing(task)"><i class="fa fa-times"></i></a>
+              <a href="" ng-if="task.info" data-toggle="collapse" data-target="#td{{task._id}}" ><i id="i-{{task._id}}" class="fa fa-chevron-down" ng-click="changeChevron('i-'+task._id)"></i></a>
+              <div id="td{{task._id}}" class="task-desc-container collapse"> {{task.info}} <br> {{task}} </div>
             </li>
           </div>
         </div>
 
         <!-- Form para crear tarea -->
         <div class="task-form" >
-          <form class="task-form" ng-hide="hideForm" >
+          <form id="formTask" class="task-form collapse">
             <p>
-              <input id="inputTask" class="form-control" type="text"  placeholder="Nombre de la tarea" ng-model="newThing">
+              <input  class="form-control" type="text"  placeholder="Nombre de la tarea" ng-model="newThing.name">
+            </p>
+            <p id="taskDescription" class="collapse">
+              <input class="form-control" type="text"  placeholder="Descripción" ng-model="newThing.info">
+            </p>
+            <p id="taskTag" >
+              <input class="form-control" type="text"  placeholder="Tag" ng-model="newThing.tag">
             </p>
             <div>
               <button type="submit" class="btn btn-primary" ng-click="addThing()">Agregar</button>
-              <button ng-click="openForm()" class="btn btn-default ">Cerrar</button>
+              <button class="btn btn-default" data-toggle="collapse" data-target="#formTask">Cerrar</button>
               <a><i class="fa fa-tag"></i></a>
               <a><i class="fa fa-calendar-plus-o"></i></a>
-              <a><i class="fa fa-sticky-note-o"></i></a>
+              <a href="" data-toggle="collapse" data-target="#taskDescription"><i class="fa fa-sticky-note-o" ></i></a>
             </div>
           </form>
-          <a href ng-click="openForm()"><b>+</b> Agregar tarea</a>
+          <a href data-toggle="collapse" data-target="#formTask"><b>+</b> Agregar tarea</a>
         </div>
 
       </div>
