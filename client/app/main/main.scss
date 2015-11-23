@@ -130,13 +130,36 @@ $hover-list: #EEE;
   h3{
     color: $primary-purple;
   }
+  .nav-pills{
+    li{
+      a{
+        color: black;
+      }
+    }
+  }
+
+  .nav {
+    li{
+      a{
+        padding-left: 0px;
+      }
+    }
+  }
+
   .list-group-item{
+    padding: 5px 5px;
     border: none;
     border-radius: 4px
   }
 
   .list-group-item:hover{
     background-color: $hover-list;
+    span{
+      background-color: #999;
+    }
+    i{
+      visibility: visible;
+    }
   }
 
   .list-group-item.active:hover, .list-group-item.active:focus{
@@ -151,22 +174,63 @@ $hover-list: #EEE;
     }
   }
 
-  button{
-    align-self: right;
-  }
-
-  a{
+  li{
     color: $primary-purple;
+
+    a.tag-options {
+      float: right;
+      margin: 0px 0px;
+      padding: 0;
+      i{
+        visibility: hidden;
+      }
+    }
+
+    a.tag-content{
+      margin: 0px 45px 0px 0px;
+      padding: 0px 0px;
+    }
   }
 
   input{
     margin: 10px 0px;
     height: 30px;
   }
+
+  #tag-options{
+    visibility: collapse;
+    width: 100px;
+    height: 50px;
+  }
+
+  span{
+    margin-right: 10px;
+    margin-top: 1px;
+  }
+
+  a{
+    margin-top: 10px;
+    color: $primary-purple;
+  }
+
+  .dropdown-menu{
+    left: 150px;
+    a{
+      margin: 3px 15px;
+    }
+  }
+
+    .btn{
+      padding: 4px 5px;
+      margin-top: 10px;
+    }
+
+
 }
 
 .task-form{
   margin: 20px 0px;
+  padding-left: 40px;
   width: 80%;
   a{
     color: $primary-purple;
@@ -210,6 +274,18 @@ $hover-list: #EEE;
       margin-right: 20px;
       font-size: 1.5em;
     }
+
+    .label{
+      float: right;
+      vertical-align: middle;
+      margin-left: 20px;
+      min-width: 40px;
+      max-width: 100px;
+      padding-right: 50px ;
+      width: 10px;
+      height: 15px;
+      text-align: right;
+    }
   }
 }
 
@@ -236,5 +312,5 @@ $hover-list: #EEE;
 }
 
 .task-desc-container{
-  padding: 10px 56px;
+  padding: 10px 25px 10px 55px;
 }

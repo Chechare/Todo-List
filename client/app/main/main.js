@@ -10,3 +10,7 @@ angular.module('toDocomApp')
   });
 
   //Mis funciones
+  var rename = function(id) {
+    console.log(id);
+      document.getElementById("renameInput").type="text";
+  };

@@ -4,13 +4,13 @@
 
 'use strict';
 
-var thing = require('./category.model');
+var Category = require('./category.model');
 
 exports.register = function(socket) {
-  thing.schema.post('save', function (doc) {
+  Category.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
-  thing.schema.post('remove', function (doc) {
+  Category.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
 }

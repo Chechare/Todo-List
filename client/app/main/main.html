@@ -15,17 +15,35 @@
       <!-- Implementar Angular here -->
       <div class="categories">
         <h3>Categorías</h3>
-        <div  ng-repeat="tag in categories">
-          <a href="#" class="list-group-item" >
-            <span class="badge">{{tag.count}}</span> {{tag.name}}
-          </a>
-        </div>
-      	<form id="tagInput" class="collapse" ng-submit="addTag(newTag)">
+        <ul class="nav nav-pills nav-stacked dropdown">
+          <li class="list-group-item " ng-repeat="tag in categories">
+            <a id="dLabel-{{tag.name}}" href="" class="tag-options" data-target="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></a>
+            <span class="badge">{{tag.count}}</span>
+            <a href="" class="tag-content" >{{tag.name}}</a>
+            <!--  Form para renombrar -->
+            <form id="tag-{{tag.name}}-rename"class=collapse ng-submit="renameTag(tag)" >
+              <div class="input-group">
+                <input class="form-control" type="text" placeholder="Nombre nuevo" ng-model="newTag.name"> </input>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#tag-{{tag.name}}-rename">X</button>
+                  </span>
+              </div>
+            <!--Menu opciones -->
+            </form>
+            <ul class="dropdown-menu" aria-labelledby="dLabel-{{tag.name}}">
+              <li> <a href data-toggle="collapse" data-target="#tag-{{tag.name}}-rename"> Renombrar</a></li>
+              <li> <a href ng-click="deleteTag(tag)"> Eliminar</a> </li>
+            </ul>
+          </li>
+        </ul>
+      	<form id="tagInput" class="collapse" ng-submit="addTag()">
       		<input class="form-control" type="text" placeholder="Nombre categoria" ng-model="newTag.name"> </input>
       	</form>
         <a href data-toggle="collapse" data-target="#tagInput" ><b>+</b> Agregar categoría</a>
       </div>
     </div>
+
+
 
     <!--- Right Panel -->
     <div class="col-md-10">
@@ -44,14 +62,15 @@
               <a class="checker" ng-click="check(task)" href=""><i id="{{task._id}}" ng-class="{'fa fa-check-square': task.completed, 'fa fa-square-o':!task.completed}"></i></a>
               <span ng-class= "{'task-completed': task.completed}">{{task.name}}</span>
               <a href="" ng-click="deleteThing(task)"><i class="fa fa-times"></i></a>
+              <span class="label label-default">{{getTag(task.tag)}}</span>
               <a href="" ng-if="task.info" data-toggle="collapse" data-target="#td{{task._id}}" ><i id="i-{{task._id}}" class="fa fa-chevron-down" ng-click="changeChevron('i-'+task._id)"></i></a>
-              <div id="td{{task._id}}" class="task-desc-container collapse"> {{task.info}} <br> {{task}} </div>
+              <div id="td{{task._id}}" class="task-desc-container collapse"> {{task.info}}</div>
             </li>
           </div>
         </div>
 
         <!-- Form para crear tarea -->
-        <div class="task-form" >
+        <div class="task-form" ng-submit="addThing()">
           <form id="formTask" class="task-form collapse">
             <p>
               <input  class="form-control" type="text"  placeholder="Nombre de la tarea" ng-model="newThing.name">
@@ -59,11 +78,14 @@
             <p id="taskDescription" class="collapse">
               <input class="form-control" type="text"  placeholder="Descripción" ng-model="newThing.info">
             </p>
-            <p id="taskTag" >
-              <input class="form-control" type="text"  placeholder="Tag" ng-model="newThing.tag">
+            <p><input class="form-control" list="tags" name="browser" placeholder="Categoría" ng-model="newThing.tag">
+              <datalist  id="tags">
+                <option ng-repeat="category in categories" value={{category.name}}>
+              </datalist>
             </p>
+
             <div>
-              <button type="submit" class="btn btn-primary" ng-click="addThing()">Agregar</button>
+              <button type="submit" class="btn btn-primary">Agregar</button>
               <button class="btn btn-default" data-toggle="collapse" data-target="#formTask">Cerrar</button>
               <a><i class="fa fa-tag"></i></a>
               <a><i class="fa fa-calendar-plus-o"></i></a>

@@ -3,21 +3,16 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-//Original
-var ThingSchema = new Schema({
-  name: String,
-  info: String,
-  tag: String,
-  date: String,
-  completed: Boolean,
-});
 
 //New Model
 var TaskSchema = new Schema({
   name: String,
   info: String,
-  tag: String,
   date: String,
+  tag: {
+    default: null,
+    type: String
+  },
   completed: {
     type: Boolean,
     default: false,

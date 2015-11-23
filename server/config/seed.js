@@ -53,6 +53,15 @@ User.find({}).remove(function() {
 
 Tag.find({}).remove(function() {
   Tag.create({
-    name:"Personal"
+    name:"Personal",
+    count:"0"
+  });
+  Tag.create({
+    name:"Trabajo",
+    count:"0"
+  });
+  Tag.create({
+    name:"Compras",
+    count:"0"
   });
 });
