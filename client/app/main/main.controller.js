@@ -16,20 +16,19 @@ angular.module('toDocomApp')
     });
 
     $scope.addThing = function() {
-      if($scope.newThing.name === '') {
+      if($scope.newThing.name == null) {
         return;
       }
       $http.post('/api/things', $scope.newThing);
 
-      if($scope.newThing.tag != ''){
+      if(!($scope.newThing.tag == null)){
         $http.post('/api/category', {
           name: $scope.newThing.tag,
-          tasks: [{_id: $scope.newThing._id}]
         });
       }
 
       $scope.newThing = null;
-    };
+  }
 
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);

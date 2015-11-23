@@ -154,6 +154,15 @@ $hover-list: #EEE;
   button{
     align-self: right;
   }
+
+  a{
+    color: $primary-purple;
+  }
+
+  input{
+    margin: 10px 0px;
+    height: 30px;
+  }
 }
 
 .task-form{
@@ -224,10 +233,6 @@ $hover-list: #EEE;
 .task-completed{
     text-decoration: line-through;
     color: #777;
-}
-
-.container{
-  width: 75%;
 }
 
 .task-desc-container{

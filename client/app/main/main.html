@@ -20,6 +20,10 @@
             <span class="badge">{{tag.count}}</span> {{tag.name}}
           </a>
         </div>
+      	<form id="tagInput" class="collapse" ng-submit="addTag(newTag)">
+      		<input class="form-control" type="text" placeholder="Nombre categoria" ng-model="newTag.name"> </input>
+      	</form>
+        <a href data-toggle="collapse" data-target="#tagInput" ><b>+</b> Agregar categoría</a>
       </div>
     </div>
 
