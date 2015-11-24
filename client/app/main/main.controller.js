@@ -15,14 +15,16 @@ angular.module('toDocomApp')
       socket.syncUpdates('category', $scope.categories);
     });
 
+    //Agregar una categoría nueva
     $scope.addTag = function(){
-      if($Scope.newTag == null){
+      if($scope.newTag == null){
         return;
       }
       $http.post('/api/category', $scope.newTag);
       $scope.newTag = null;
     };
 
+    //Renombrar una categoría
     $scope.renameTag = function(tag){
       if(tag.name == null){
         return;
@@ -34,6 +36,7 @@ angular.module('toDocomApp')
       $scope.newTag=null;
     }
 
+    //Eliminar una categoría
     $scope.deleteTag = function(tag){
       if(tag.count > 0){
         var id = tag._id;
@@ -49,6 +52,7 @@ angular.module('toDocomApp')
       $http.delete('/api/category/' + tag._id);
     }
 
+    //Crear una tarea nueva
     $scope.addThing = function() {
       var result = null;
       if($scope.newThing.name == null) {
@@ -86,6 +90,7 @@ angular.module('toDocomApp')
       }
     };
 
+    //Eliminar una tarea
     $scope.deleteThing = function(thing) {
       if(!thing.completed && thing.tag != null){
         var i = 0;
@@ -97,19 +102,51 @@ angular.module('toDocomApp')
       }
       $http.delete('/api/things/'+thing._id);
 
-    };
+    };  //--------------------------------Editar una tarea---------------------------/
 
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
-    });
+    $scope.changeTodo = function(id){
+        var taskEdited= {_id:""};
+        taskEdited._id = id;
+        console.log($scope.newThing);
+        if($scope.newThing.name != ""){
+          taskEdited.name = $scope.newThing.name;
+        }
 
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('category');
-    });
+        if($scope.newThing.info != "" ){
+          taskEdited.info = $scope.newThing.info;
+        }
 
-    //Mis funciones y variables
-    $scope.hideForm = true;
+        if(!($scope.newThing.tag == undefined)){
+          $http.get('/api/category/{"name":"'+$scope.newThing.tag+'"}').success(function(array) {
+            result=array;
 
+            if(result.length == 0){
+              $scope.newTag.name = $scope.newThing.tag;
+              $scope.newTag.count = 1;
+              $http.post('/api/category', $scope.newTag).success(function(){
+                $http.get('/api/category/{"name":"'+$scope.newThing.tag+'"}').success(
+                  function(array){
+                    result=array;
+                    taskEdited.tag=result[0]._id;
+                    $http.put('/api/things/'+taskEdited._id, taskEdited);
+                    $scope.newThing = null;
+                  });
+              });
+            }else{
+              result[0].count++;
+              $http.put('/api/category/' + result[0]._id, result[0]);
+              taskEdited.tag=result[0]._id;
+              $http.put('/api/things/'+taskEdited._id, taskEdited);
+              $scope.newThing = null;
+            }
+          });
+        }else{
+          $http.put('/api/things/'+taskEdited._id, taskEdit);
+          $scope.newThing = null;
+        }
+      };
+
+    //Marcar/desmarcar una tarea como completada
     $scope.check =  function(task){
       task.completed = !task.completed;
       if(task.tag != null){
@@ -128,6 +165,7 @@ angular.module('toDocomApp')
       $http.put('/api/things/' + task._id, task);
     };
 
+    //Abrir los detalles de la tarea
     $scope.changeChevron = function(id){
       if(document.getElementById(id).className=="fa fa-chevron-down" ){
         document.getElementById(id).className="fa fa-chevron-up";
@@ -136,6 +174,7 @@ angular.module('toDocomApp')
       }
     }
 
+    //Buscar un tag dentro del arreglo local
     $scope.getTag = function(id){
       for(var i = 0; i < $scope.categories.length; i++){
         if($scope.categories[i]._id == id){

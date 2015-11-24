@@ -254,6 +254,29 @@ $hover-list: #EEE;
   }
 }
 
+.task-editor-form{
+  margin-left: 55px;
+  padding-top: 10px;
+  height: 0px;
+  width: 80%;
+
+  i.fa{
+    color: $primary-purple;
+  }
+  button.btn{
+    padding: 3px 6px;
+
+  }
+  div{
+    margin-bottom: 5px;
+  }
+  #taskDescription{
+    input{
+      height: 80px;
+    }
+  }
+}
+
 .tasks{
   margin-top: 20px;
   div{
@@ -265,6 +288,10 @@ $hover-list: #EEE;
       margin-left: 20px;
     }
 
+    a:hover{
+      color:$primary-purple;
+    }
+
     .checker{
       color: #999;
       vertical-align: middle;
@@ -272,6 +299,7 @@ $hover-list: #EEE;
       margin-top: -3px;
       float: left;
       margin-right: 20px;
+      margin-left: 15px;
       font-size: 1.5em;
     }
 
@@ -286,6 +314,19 @@ $hover-list: #EEE;
       height: 15px;
       text-align: right;
     }
+
+    .editor{
+      float:left;
+      vertical-align: middle;
+      margin-left: -10px;
+      visibility: hidden;
+    }
+  }
+}
+
+li.task:hover{
+  a.editor{
+    visibility: visible;
   }
 }
 
