@@ -1,9 +1,9 @@
 <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <div  ng-include="'components/navbar/navbar.html'"></div>
 
-<!---Left Panel --->
 <div class="container">
   <div class="row">
+    <!---Left Panel --->
     <div class="col-md-2">
       <ul class="nav nav-pills nav-stacked">
         <li role="presentation" class="active"><a href="#">Todo</a></li>
@@ -12,7 +12,6 @@
       </ul>
 
       <!---Categories-->
-      <!-- Implementar Angular here -->
       <div class="categories">
         <h3>Categorías</h3>
         <ul class="nav nav-pills nav-stacked dropdown">
@@ -21,7 +20,7 @@
             <span class="badge">{{tag.count}}</span>
             <a href="" class="tag-content" >{{tag.name}}</a>
             <!--  Form para renombrar -->
-            <form id="tag-{{tag.name}}-rename"class=collapse ng-submit="renameTag(tag)" >
+            <form id="tag-{{tag.name}}-rename"class=collapse ng-submit="renameTag()" >
               <div class="input-group">
                 <input class="form-control" type="text" placeholder="Nombre nuevo" ng-model="newTag.name"> </input>
                 <span class="input-group-btn">
@@ -56,74 +55,74 @@
       </ul>
 
         <!--  Container de Tarea -->
-        <div class="tasks">
-          <div ng-repeat= "task in awesomeThings">
-            <li class="task">
-              <a class="editor" data-toggle="collapse" data-target="#task-editor-{{task._id}}" href><i class="fa fa-pencil-square-o"></i></a>
-              <a class="checker" ng-click="check(task)" href=""><i id="{{task._id}}" ng-class="{'fa fa-check-square': task.completed, 'fa fa-square-o':!task.completed}"></i></a>
-              <span ng-class= "{'task-completed': task.completed}">{{task.name}}</span>
-              <a href="" ng-click="deleteThing(task)"><i class="fa fa-times"></i></a>
-              <span class="label label-default">{{getTag(task.tag)}}</span>
-              <a href="" ng-if="task.info" data-toggle="collapse" data-target="#td{{task._id}}" ><i id="i-{{task._id}}" class="fa fa-chevron-down" ng-click="changeChevron('i-'+task._id)"></i></a>
-              <div id="td{{task._id}}" class="task-desc-container collapse"> {{task.info}}</div>
+      <div class="tasks">
+        <div ng-repeat= "task in awesomeThings">
+          <li class="task">
+            <a class="editor" data-toggle="collapse" data-target="#task-editor-{{task._id}}" href><i class="fa fa-pencil-square-o"></i></a>
+            <a class="checker" ng-click="check(task)" href=""><i id="{{task._id}}" ng-class="{'fa fa-check-square': task.completed, 'fa fa-square-o':!task.completed}"></i></a>
+            <span ng-class= "{'task-completed': task.completed}">{{task.name}}</span>
+            <a href="" ng-click="deleteThing(task)"><i class="fa fa-times"></i></a>
+            <span class="label label-default">{{getTag(task.tag)}}</span>
+            <a href="" ng-if="task.info" data-toggle="collapse" data-target="#td{{task._id}}" ><i id="i-{{task._id}}" class="fa fa-chevron-down" ng-click="changeChevron('i-'+task._id)"></i></a>
+            <div id="td{{task._id}}" class="task-desc-container collapse"> {{task.info}}</div>
 
-              <!--Form para editar la tarea -->
-              <div id="task-editor-{{task._id}}" class="task-editor-form collapse">
-                <form ng-submit="changeTodo(task._id)">
+            <!--Form para editar la tarea -->
+            <div id="task-editor-{{task._id}}" class="task-editor-form collapse">
+              <form ng-submit="changeTodo(task, newThing)">
+                <div class="input-group input-group-sm">
+                  <span class="input-group-addon" id="addon-{{task._id}}"><i class="fa fa-pencil"></i></span>
+                  <input id="name-{{task._id}}" class="form-control" type="text" placeholder="Nuevo nombre" ng-model="newThing.name" ></input>
+                </div>
 
-                  <div class="input-group input-group-sm">
-                    <span class="input-group-addon" id="basic-addon-1{{task._id}}"><i class="fa fa-pencil"></i></span>
-                    <input id="name-{{task._id}}" class="form-control" type="text" placeholder="Nuevo nombre" ng-model="newThing.name" ></input>
-                  </div>
+                <div class="input-group input-group-sm">
+                  <span class="input-group-addon" id="addon2-{{task._id}}"><i class="fa fa-sticky-note-o" ></i></span>
+                  <input id="desc-{{task._id}}" type="text" class="form-control" type="text"  placeholder="Nueva descripción" ng-model="newThing.info"></input>
+                </div>
 
-                  <div class="input-group input-group-sm">
-                    <span class="input-group-addon" id="basic-addon-2{{task._id}}"><i class="fa fa-sticky-note-o" ></i></span>
-                    <input id="desc-{{task._id}}" type="text" class="form-control" type="text"  placeholder="Nueva descripción" ng-model="newThing.info"></input>
-                  </div>
+                <div class="input-group input-group-sm">
+                  <span class="input-group-addon" id="addon3-{{task._id}}"><i class="fa fa-tag"></i></span>
+                  <input  id="tag-{{task._id}}" class="form-control" list="tags" name="browser" placeholder="Nueva catagoría" ng-model="newThing.tag"></input>
+                </div>
 
-                  <div class="input-group input-group-sm">
-                    <span class="input-group-addon" id="basic-addon-3{{task._id}}"><i class="fa fa-tag"></i></span>
-                    <input  id="tag-{{task._id}}" class="form-control" list="tags" name="browser" placeholder="Nueva catagoría" ng-model="newThing.tag"></input>
-                  </div>
-                  <div>
-                    <button id="b-{{task._id}}" type="submit" class="btn btn-primary" ng-click="changeTodo(task._id)">Editar</button>
-                    <button class="btn btn-default" data-toggle="collapse" data-target="#task-editor-{{task._id}}">Cerrar</button>
-                  </div>
-                </form>
-              </div>
-            </li>
-          </div>
-        </div>
-
-
-        <!-- Form para crear tarea -->
-        <div class="task-form" ng-submit="addThing()">
-          <form id="formTask" class="task-form collapse">
-            <p>
-              <input  class="form-control" type="text"  placeholder="Nombre de la tarea" ng-model="newThing.name">
-            </p>
-            <p id="taskDescription" class="collapse">
-              <input class="form-control" type="text"  placeholder="Descripción" ng-model="newThing.info">
-            </p>
-            <p><input class="form-control" list="tags" name="browser" placeholder="Categoría" ng-model="newThing.tag">
-              <datalist  id="tags">
-                <option ng-repeat="category in categories" value={{category.name}}>
-              </datalist>
-            </p>
-
-            <div>
-              <button type="submit" class="btn btn-primary">Agregar</button>
-              <button class="btn btn-default" data-toggle="collapse" data-target="#formTask">Cerrar</button>
-              <a><i class="fa fa-tag"></i></a>
-              <a><i class="fa fa-calendar-plus-o"></i></a>
-              <a href="" data-toggle="collapse" data-target="#taskDescription"><i class="fa fa-sticky-note-o" ></i></a>
+                <div>
+                  <button id="b-{{task._id}}" type="submit" class="btn btn-primary">Editar</button>
+                  <button class="btn btn-default" data-toggle="collapse" data-target="#task-editor-{{task._id}}">Cerrar</button>
+                </div>
+              </form>
             </div>
-          </form>
-          <a href data-toggle="collapse" data-target="#formTask"><b>+</b> Agregar tarea</a>
+          </li>
         </div>
       </div>
 
-    </div >
+
+      <!-- Form para crear tarea -->
+      <div class="task-form" ng-submit="addThing()">
+        <form id="formTask" class="task-form collapse">
+          <p>
+            <input  class="form-control" type="text"  placeholder="Nombre de la tarea" ng-model="newThing.name"></input>
+          </p>
+          <p id="taskDescription" class="collapse">
+            <input class="form-control" type="text"  placeholder="Descripción" ng-model="newThing.info"></input>
+          </p>
+          <p>
+            <input class="form-control" list="tags" name="browser" placeholder="Categoría" ng-model="newThing.tag"></input>
+            <datalist  id="tags">
+              <option ng-repeat="category in categories" value={{category.name}}></option>
+            </datalist>
+          </p>
+
+          <div>
+            <button type="submit" class="btn btn-primary">Agregar</button>
+            <button class="btn btn-default" data-toggle="collapse" data-target="#formTask">Cerrar</button>
+            <a><i class="fa fa-tag"></i></a>
+            <a><i class="fa fa-calendar-plus-o"></i></a>
+            <a href="" data-toggle="collapse" data-target="#taskDescription"><i class="fa fa-sticky-note-o" ></i></a>
+          </div>
+        </form>
+        <a href data-toggle="collapse" data-target="#formTask"><b>+</b> Agregar tarea</a>
+      </div>
+    </div>
+
   </div>
 </div>
 

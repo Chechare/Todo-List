@@ -4,6 +4,7 @@ angular.module('toDocomApp')
     $scope.awesomeThings = [];
     $scope.categories = [];
     $scope.newTag = {name:"", count:0};
+    $scope.newThing  = null;
 
     $http.get('/api/things/').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
@@ -17,23 +18,23 @@ angular.module('toDocomApp')
 
     //Agregar una categoría nueva
     $scope.addTag = function(){
-      if($scope.newTag == null){
+      if($scope.newTag == ""){
         return;
       }
       $http.post('/api/category', $scope.newTag);
-      $scope.newTag = null;
+      $scope.newTag = "";
     };
 
     //Renombrar una categoría
-    $scope.renameTag = function(tag){
-      if(tag.name == null){
+    $scope.renameTag = function(){
+      if($scope.newTag.name == ""){
         return;
       }
 
       $http.put('/api/category/'+tag._id, {
         name: $scope.newTag.name
       });
-      $scope.newTag=null;
+      $scope.newTag="";
     }
 
     //Eliminar una categoría
@@ -54,36 +55,31 @@ angular.module('toDocomApp')
 
     //Crear una tarea nueva
     $scope.addThing = function() {
-      var result = null;
-      if($scope.newThing.name == null) {
+      var result = [];
+      if($scope.newThing.name == null ) {
         return;
       }
 
-      if(!($scope.newThing.tag == undefined)){
+      if($scope.newThing.tag != "" && $scope.newThing.tag != null){
         $http.get('/api/category/{"name":"'+$scope.newThing.tag+'"}').success(function(array) {
-          result=array;
 
-          if(result.length == 0){
+          if(array.length == 0){
             $scope.newTag.name = $scope.newThing.tag;
             $scope.newTag.count = 1;
-            $http.post('/api/category', $scope.newTag).success(function(){
-              $http.get('/api/category/{"name":"'+$scope.newThing.tag+'"}').success(
-                function(array){
-                  result=array;
-                  $scope.newThing.tag=result[0]._id;
-                  $http.post('/api/things', $scope.newThing);
-                  $scope.newThing = null;
-                })
+            $scope.addTag();
+            $http.get('/api/category/{"name":"'+$scope.newThing.tag+'"}').success(function(array){
+                $scope.newThing.tag=array[0]._id;
+                $http.post('/api/things', $scope.newThing);
+                $scope.newThing = null;
             });
-
           }else{
-            result[0].count++;
-            $http.put('/api/category/' + result[0]._id, result[0]);
-            $scope.newThing.tag=result[0]._id;
+            array[0].count++;
+            $http.put('/api/category/' + array[0]._id, array[0]);
+            $scope.newThing.tag=array[0]._id;
             $http.post('/api/things', $scope.newThing);
             $scope.newThing = null;
           }
-        });
+      });
       }else{
         $http.post('/api/things', $scope.newThing);
         $scope.newThing = null;
@@ -104,44 +100,52 @@ angular.module('toDocomApp')
 
     };  //--------------------------------Editar una tarea---------------------------/
 
-    $scope.changeTodo = function(id){
-        var taskEdited= {_id:""};
-        taskEdited._id = id;
-        console.log($scope.newThing);
-        if($scope.newThing.name != ""){
-          taskEdited.name = $scope.newThing.name;
+    $scope.changeTodo = function(task, input){
+        var taskEdited = {};
+        if(input == null){
+          return;
         }
 
-        if($scope.newThing.info != "" ){
-          taskEdited.info = $scope.newThing.info;
+        taskEdited._id=task._id;
+
+        if(input.name != null ){
+          taskEdited.name = input.name;
         }
 
-        if(!($scope.newThing.tag == undefined)){
-          $http.get('/api/category/{"name":"'+$scope.newThing.tag+'"}').success(function(array) {
-            result=array;
+        if(input.info != null ){
+          taskEdited.info = input.info;
+        }
 
-            if(result.length == 0){
-              $scope.newTag.name = $scope.newThing.tag;
-              $scope.newTag.count = 1;
-              $http.post('/api/category', $scope.newTag).success(function(){
-                $http.get('/api/category/{"name":"'+$scope.newThing.tag+'"}').success(
-                  function(array){
-                    result=array;
-                    taskEdited.tag=result[0]._id;
-                    $http.put('/api/things/'+taskEdited._id, taskEdited);
-                    $scope.newThing = null;
-                  });
+        if(input.tag != null){
+          $http.get('/api/category/{"name":"'+input.tag+'"}').success(function(array) {
+
+            if(array.length == 0){
+              var newTag = {
+                  name : input.tag,
+                  count: 1
+              };
+              $http.post('/api/category', newTag).success(function(){
+                $http.get('/api/category/{"name":"'+input.tag+'"}').success(function(array){
+                  console.log(array);
+                  taskEdited.tag = array[0]._id;
+                  $http.put('/api/things/'+taskEdited._id, taskEdited);
+                });
               });
             }else{
-              result[0].count++;
-              $http.put('/api/category/' + result[0]._id, result[0]);
-              taskEdited.tag=result[0]._id;
-              $http.put('/api/things/'+taskEdited._id, taskEdited);
-              $scope.newThing = null;
+        
+              $http.put('/api/category/' + task.tag, {count: $scope.getTagCount(task.tag) - 1});
+
+              array[0].count++;
+              $http.put('/api/category/' + array[0]._id, array[0]);
+              taskEdited.tag=array[0]._id;
+              $http.put('/api/things/'+taskEdited._id, taskEdited   );
+              input = null;
             }
           });
         }else{
-          $http.put('/api/things/'+taskEdited._id, taskEdit);
+          console.log("no tag");
+          console.log(taskEdited._id);
+          $http.put('/api/things/'+taskEdited._id, taskEdited);
           $scope.newThing = null;
         }
       };
@@ -179,6 +183,15 @@ angular.module('toDocomApp')
       for(var i = 0; i < $scope.categories.length; i++){
         if($scope.categories[i]._id == id){
           return $scope.categories[i].name;
+        }
+      }
+      return null;
+    }
+
+    $scope.getTagCount = function(id){
+      for(var i = 0; i < $scope.categories.length; i++){
+        if($scope.categories[i]._id == id){
+          return $scope.categories[i].count;
         }
       }
       return null;
