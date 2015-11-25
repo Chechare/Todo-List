@@ -20,7 +20,7 @@
             <span class="badge">{{tag.count}}</span>
             <a href="" class="tag-content" >{{tag.name}}</a>
             <!--  Form para renombrar -->
-            <form id="tag-{{tag.name}}-rename"class=collapse ng-submit="renameTag()" >
+            <form id="tag-{{tag.name}}-rename"class=collapse ng-submit="renameTag(tag)" >
               <div class="input-group">
                 <input class="form-control" type="text" placeholder="Nombre nuevo" ng-model="newTag.name"> </input>
                 <span class="input-group-btn">
