@@ -22,8 +22,9 @@ exports.index = function(req, res) {
 
 // Get a single thing
 exports.show = function(req, res) {
+  console.log("show");
+  console.log(req.params.query);
   var query = JSON.parse(req.params.query);
-  console.log(query);
   Thing.find(query, function (err, thing) {
     if(err) { return handleError(res, err); }
     if(!thing) { return res.status(404).send('Not Found'); }
